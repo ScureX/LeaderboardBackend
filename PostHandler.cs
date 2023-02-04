@@ -6,14 +6,14 @@ using System.Text.Json;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 using Modules;
 using static Constants.Constants;
-
+using System.Net;
 
 namespace LeaderboardBackend
 {
     class PostHandler
     {
 
-        public void HandleHttpPost(string jsonString)
+        public void HandleHttpPost(string jsonString, WebHeaderCollection headers)
         {
             // Parse the JSON body from the POST request
             Root jsonBody = JsonSerializer.Deserialize<Root>(jsonString);
@@ -51,11 +51,11 @@ namespace LeaderboardBackend
             string path = PATH_RANKME_DATA;
             string uid = mod.uid;
             string name = mod.name;
-            int kills = mod.kills;
-            int deaths = mod.deaths;
-            int points = mod.points;
-            bool track = mod.track;
-            bool pointFeed = mod.pointFeed;
+            int? kills = mod.kills;
+            int? deaths = mod.deaths;
+            int? points = mod.points;
+            bool? track = mod.track;
+            bool? pointFeed = mod.pointFeed;
 
             EnsureFileExistence(path);
 
@@ -75,12 +75,12 @@ namespace LeaderboardBackend
                 if (item.uid == uid)
                 {
                     // Update the values for the uid
-                    item.name = name;
-                    item.kills = kills;
-                    item.deaths = deaths;
-                    item.points = points;
-                    item.track = track;
-                    item.pointFeed = pointFeed;
+                    item.name = name != null ? name : item.name;
+                    item.kills = (int)(kills != null ? kills : item.kills);
+                    item.deaths = (int)(deaths != null ? deaths : item.deaths);
+                    item.points = (int)(points != null ? points : item.points);
+                    item.track = (bool)(track != null ? track : item.track);
+                    item.pointFeed = (bool)(pointFeed != null ? pointFeed : item.pointFeed);
                     uidFound = true;
                     break;
                 }
@@ -92,11 +92,11 @@ namespace LeaderboardBackend
                 {
                     uid = uid,
                     name = name,
-                    kills = kills,
-                    deaths = deaths,
-                    points = points,
-                    track = track,
-                    pointFeed = pointFeed
+                    kills = (int)kills,
+                    deaths = (int)deaths,
+                    points = (int)points,
+                    track = (bool)track,
+                    pointFeed = (bool)pointFeed
                 });
             }
 
@@ -112,7 +112,7 @@ namespace LeaderboardBackend
             string path = PATH_TOPSPEED_DATA;
             string uid = mod.uid;
             string name = mod.name;
-            double speed = mod.speed;
+            double speed = (double)mod.speed;
 
 
             EnsureFileExistence(path);
@@ -157,7 +157,7 @@ namespace LeaderboardBackend
             string path = PATH_TIMEWASTED_DATA;
             string uid = mod.uid;
             string name = mod.name;
-            int minutesPlayed = mod.minutesPlayed;
+            int minutesPlayed = (int)mod.minutesPlayed;
 
             EnsureFileExistence(path);
 

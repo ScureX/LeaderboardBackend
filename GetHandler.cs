@@ -48,6 +48,13 @@ namespace LeaderboardBackend
             string jsonString = File.ReadAllText(PATH_RANKME_DATA);
             data = JsonConvert.DeserializeObject<List<RankmeData>>(jsonString);
 
+            bool returnRaw = false;
+
+            // check if should return raw or formatted
+            foreach (string key in headers.AllKeys)
+                if (key == "t_returnraw")
+                    returnRaw = bool.Parse(headers.GetValues(key)[0]);
+
             foreach (string key in headers.AllKeys)
             {
                 if(key == "t_uid")
@@ -55,7 +62,11 @@ namespace LeaderboardBackend
                     foreach (var item in data)
                     {
                         if (item.uid == headers.GetValues(key)[0])
-                            return $"{COLOR_RANKME}[RankMe] {COLOR_WHITE}{item.name} {item.kills}/{item.deaths}/{Math.Round((float)item.kills/item.deaths, 2)} (K/D) with {item.points} points";
+                        {
+                            if(!returnRaw)
+                                return $"{COLOR_RANKME}[RankMe] {COLOR_WHITE}{item.name} {item.kills}/{item.deaths}/{Math.Round((float)item.kills/item.deaths, 2)} (K/D) with {item.points} points";
+                            return JsonConvert.SerializeObject(item);
+                        }
                     }
                     break;
                 }

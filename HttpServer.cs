@@ -29,17 +29,18 @@ namespace LeaderboardBackend
                 var request = context.Request;
                 var response = context.Response;
 
+                WebHeaderCollection headers = (WebHeaderCollection)request.Headers;
+
                 if (request.HttpMethod == "POST")
                 {
                     using (var reader = new StreamReader(request.InputStream))
                     {
-                        postHandler.HandleHttpPost(reader.ReadToEnd());
+                        postHandler.HandleHttpPost(reader.ReadToEnd(), headers);
                     }
                 }
 
                 if (request.HttpMethod == "GET")
                 {
-                    WebHeaderCollection headers = (WebHeaderCollection)request.Headers;
                     response = getHandler.HandleHttpGet(response, headers);
                 }
 
