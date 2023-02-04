@@ -33,6 +33,7 @@ namespace LeaderboardBackend
 
                 if (request.HttpMethod == "POST")
                 {
+                    Console.WriteLine("Received POST Request");
                     using (var reader = new StreamReader(request.InputStream))
                     {
                         postHandler.HandleHttpPost(reader.ReadToEnd(), headers);
@@ -41,6 +42,7 @@ namespace LeaderboardBackend
 
                 if (request.HttpMethod == "GET")
                 {
+                    Console.WriteLine("Received GET Request");
                     response = getHandler.HandleHttpGet(response, headers);
                 }
 

@@ -44,6 +44,7 @@ namespace LeaderboardBackend
         // get info about one player
         private string RankmeResponse_QueryPlayer(WebHeaderCollection headers)
         {
+            Console.WriteLine("GET for QueryPlayer");
             List<RankmeData> data = new List<RankmeData>(); // todo sort all players n shit for rank
             string jsonString = File.ReadAllText(PATH_RANKME_DATA);
             data = JsonConvert.DeserializeObject<List<RankmeData>>(jsonString);
@@ -78,6 +79,7 @@ namespace LeaderboardBackend
         // get rankme leaderboard
         private string RankmeResponse_Leaderboard(WebHeaderCollection headers) // leave in params maybe diff leaderboard sortings idk
         {
+            Console.WriteLine("GET for Leaderboard");
             List<RankmeData> data = new List<RankmeData>(); 
             string jsonString = File.ReadAllText(PATH_RANKME_DATA);
             data = JsonConvert.DeserializeObject<List<RankmeData>>(jsonString);

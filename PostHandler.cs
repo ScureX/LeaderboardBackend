@@ -12,7 +12,6 @@ namespace LeaderboardBackend
 {
     class PostHandler
     {
-
         public void HandleHttpPost(string jsonString, WebHeaderCollection headers)
         {
             // Parse the JSON body from the POST request
@@ -47,6 +46,7 @@ namespace LeaderboardBackend
 
         private void SaveRankmeData(Mod mod)
         {
+            Console.WriteLine("Updating RankedMe Data");
             // Get the file path for the rankme mod
             string path = PATH_RANKME_DATA;
             string uid = mod.uid;
@@ -108,6 +108,7 @@ namespace LeaderboardBackend
 
         private void SaveTopspeedData(Mod mod)
         {
+            Console.WriteLine("Updating TopSpeed Data");
             // Get the file path for the topspeed mod
             string path = PATH_TOPSPEED_DATA;
             string uid = mod.uid;
@@ -153,6 +154,7 @@ namespace LeaderboardBackend
 
         private void SaveTimewastedData(Mod mod)
         {
+            Console.WriteLine("Updating TimeWasted Data");
             // Get the file path for the timewasted mod
             string path = PATH_TIMEWASTED_DATA;
             string uid = mod.uid;
