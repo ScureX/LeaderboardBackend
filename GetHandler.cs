@@ -34,6 +34,11 @@ namespace LeaderboardBackend
                 }
             }
 
+            if(result == "ERROR")
+                response.StatusCode = 400;
+            else
+                response.StatusCode = 200;
+
             var output = response.OutputStream;
             byte[] b = Encoding.UTF8.GetBytes(result);
             output.Write(b, 0, b.Length);

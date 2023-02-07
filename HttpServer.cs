@@ -46,7 +46,6 @@ namespace LeaderboardBackend
                     response = getHandler.HandleHttpGet(response, headers);
                 }
 
-                response.StatusCode = 200;
                 response.Close();
             }
         }
