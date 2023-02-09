@@ -31,20 +31,14 @@ namespace LeaderboardBackend
 
                 WebHeaderCollection headers = (WebHeaderCollection)request.Headers;
 
+                // handle post request 
                 if (request.HttpMethod == "POST")
-                {
-                    Console.WriteLine("Received POST Request");
                     using (var reader = new StreamReader(request.InputStream))
-                    {
                         postHandler.HandleHttpPost(reader.ReadToEnd(), headers);
-                    }
-                }
 
+                // handle get request
                 if (request.HttpMethod == "GET")
-                {
-                    Console.WriteLine("Received GET Request");
                     response = getHandler.HandleHttpGet(response, headers);
-                }
 
                 response.Close();
             }
