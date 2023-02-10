@@ -75,7 +75,7 @@ namespace LeaderboardBackend
                         if (item.uid == headers.GetValues(key)[0])
                         {
                             if(!returnRaw)
-                                return $"{COLOR_MODNAME}[RankMe] {COLOR_WHITE}{item.name} {item.kills}/{item.deaths}/{Math.Round((float)item.kills/item.deaths, 2)} (K/D) with {item.points} points";
+                                return $"{COLOR_MODNAME}[RankMe] {COLOR_WHITE}{item.name} {COLOR_GREEN}{item.kills}/{COLOR_RED}{item.deaths} {COLOR_WHITE}({Math.Round((float)item.kills/item.deaths, 2)}) with {COLOR_GREEN}{item.points} {COLOR_WHITE}points";
                             return JsonConvert.SerializeObject(item);
                         }
                     }

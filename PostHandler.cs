@@ -114,7 +114,7 @@ namespace LeaderboardBackend
             string uid = mod.uid;
             string name = mod.name;
             double speed = (double)mod.speed;
-
+            bool aboveAnnounceSpeed = (bool)mod.aboveAnnounceSpeed;
 
             EnsureFileExistence(path);
 
@@ -135,6 +135,7 @@ namespace LeaderboardBackend
                 {
                     item.name = name;
                     item.speed = speed;
+                    item.aboveAnnounceSpeed = aboveAnnounceSpeed;
                     uidFound = true;
                     break;
                 }
@@ -143,7 +144,7 @@ namespace LeaderboardBackend
             if (!uidFound)
             {
                 // Add a new TopspeedData with the data for the uid
-                data.Add(new TopspeedData { uid = uid, name = name, speed = speed });
+                data.Add(new TopspeedData { uid = uid, name = name, speed = speed, aboveAnnounceSpeed = aboveAnnounceSpeed});
             }
 
             // Write the updated data to the file

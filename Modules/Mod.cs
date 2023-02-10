@@ -12,5 +12,6 @@
         public bool? pointFeed { get; set; } = null;
         public double? speed { get; set; } = null;
         public int? minutesPlayed { get; set; } = null;
+        public bool? aboveAnnounceSpeed { get; set; } = false; 
     }
 }
