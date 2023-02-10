@@ -77,6 +77,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="GetHandler.cs" />
     <Compile Include="HttpServer.cs" />
+    <Compile Include="Modules\Helper.cs" />
     <Compile Include="Modules\Mod.cs" />
     <Compile Include="Modules\Player.cs" />
     <Compile Include="PostHandler.cs" />
