@@ -160,7 +160,7 @@ namespace LeaderboardBackend
             string path = PATH_TIMEWASTED_DATA;
             string uid = mod.uid;
             string name = mod.name;
-            int minutesPlayed = (int)mod.minutesPlayed;
+            float minutesPlayed = (float)mod.minutesPlayed;
 
             EnsureFileExistence(path);
 

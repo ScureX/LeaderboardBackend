@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using static Constants.Constants;
@@ -33,6 +34,15 @@ namespace LeaderboardBackend
                         case "topspeed_queryplayer":
                             result = TopspeedResponse_QueryPlayer(headers);
                             break;
+                        case "timewasted_leaderboard":
+                            result = TimewastedResponse_Leaderboard(headers);
+                            break;
+                        case "timewasted_queryplayer":
+                            result = TimewastedResponse_QueryPlayer(headers);
+                            break;
+                        case "timewasted_allwastedtime":
+                            result = TimewastedResponse_AllWastedTime(headers);
+                            break;
                     }
                 }
             }
@@ -47,6 +57,73 @@ namespace LeaderboardBackend
             output.Write(b, 0, b.Length);
 
             return response;
+        }
+
+        /* TIME WASTED */
+
+        private string TimewastedResponse_AllWastedTime(WebHeaderCollection headers)
+        {
+            Console.WriteLine("GET for AllWastedTime");
+            List<TimewastedData> data = new List<TimewastedData>();
+            string jsonString = File.ReadAllText(PATH_TIMEWASTED_DATA);
+            data = JsonConvert.DeserializeObject<List<TimewastedData>>(jsonString);
+
+            string result = $"{COLOR_MODNAME}[TimeWasted] {COLOR_WHITE}{data.Count} players wasted {COLOR_GREEN}{Math.Round((float)(data.Sum(entry => entry.minutesPlayed)) / 60), 2} {COLOR_WHITE}Hours since {TimewastedData.START_DATE} on this Server!";
+
+            return result.Length > 0 ? result : "ERROR"; // TODO this is shit obvsly
+        }
+
+        private string TimewastedResponse_QueryPlayer(WebHeaderCollection headers)
+        {
+            Console.WriteLine("GET for QueryPlayer");
+            List<TimewastedData> data = new List<TimewastedData>(); // todo sort all players n shit for rank
+            string jsonString = File.ReadAllText(PATH_TIMEWASTED_DATA);
+            data = JsonConvert.DeserializeObject<List<TimewastedData>>(jsonString);
+
+            bool returnRaw = false;
+
+            // check if should return raw or formatted
+            foreach (string key in headers.AllKeys)
+                if (key == "t_returnraw")
+                    returnRaw = bool.Parse(headers.GetValues(key)[0]);
+
+            foreach (string key in headers.AllKeys)
+            {
+                if (key == "t_uid")
+                {
+                    foreach (var item in data)
+                    {
+                        if (item.uid == headers.GetValues(key)[0])
+                        {
+                            if (!returnRaw)
+                                return $"{COLOR_MODNAME}[TimeWasted] {COLOR_WHITE}{item.name} wasted {COLOR_GREEN}{Math.Round((float)(item.minutesPlayed / 60), 2)} Hours since {TimewastedData.START_DATE} {COLOR_WHITE}on this Server!";
+                            return JsonConvert.SerializeObject(item);
+                        }
+                    }
+                    break;
+                }
+            }
+
+            return "ERROR";
+        }
+
+        private string TimewastedResponse_Leaderboard(WebHeaderCollection headers)
+        {
+            Console.WriteLine("GET for Leaderboard");
+            List<TimewastedData> data = new List<TimewastedData>();
+            string jsonString = File.ReadAllText(PATH_TIMEWASTED_DATA);
+            data = JsonConvert.DeserializeObject<List<TimewastedData>>(jsonString);
+            data.Sort((p, q) => q.minutesPlayed.CompareTo(p.minutesPlayed));
+
+            string result = $"{COLOR_MODNAME}[TopSpeed] {COLOR_GREEN}Top Leaderboard {COLOR_WHITE}[{data.Count} Ranked]\n";
+
+            // go thru first 15 (or less) entries
+            for (int i = 0; i <= (data.Count > 15 ? 15 : data.Count - 1); i++)
+            {
+                result += $"[{i + 1}] {COLOR_WHITE}{data[i].name} wasted {COLOR_GREEN}{Math.Round((float)(data[i].minutesPlayed / 60), 2)} Hours since {TimewastedData.START_DATE} {COLOR_WHITE}on this Server!\n";
+            }
+
+            return result.Length > 0 ? result : "ERROR"; // TODO this is shit obvsly
         }
 
         /* RANK ME */
