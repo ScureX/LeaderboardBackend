@@ -12,16 +12,17 @@ namespace LeaderboardBackend
         PostHandler postHandler;
         GetHandler getHandler;
 
-        public HttpServer(PostHandler postHandler, GetHandler getHandler)
+        public HttpServer(PostHandler postHandler, GetHandler getHandler, string port)
         {
             this.postHandler = postHandler;
+            this.getHandler = getHandler;
 
             listener = new HttpListener();
-            listener.Prefixes.Add("http://localhost:8080/");
-            listener.Prefixes.Add("http://127.0.0.1:8080/");
+            listener.Prefixes.Add($"http://localhost:{port}/");
+            listener.Prefixes.Add($"http://127.0.0.1:{port}/");
             listener.Start();
 
-            Console.WriteLine("Listening...");
+            Console.WriteLine($"Listening to {port}...");
 
             while (true)
             {

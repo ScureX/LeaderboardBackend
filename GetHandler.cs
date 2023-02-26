@@ -63,7 +63,7 @@ namespace LeaderboardBackend
 
         private string TimewastedResponse_AllWastedTime(WebHeaderCollection headers)
         {
-            Console.WriteLine("GET for AllWastedTime");
+            Console.WriteLine("GET for Timewasted AllWastedTime");
             List<TimewastedData> data = new List<TimewastedData>();
             string jsonString = File.ReadAllText(PATH_TIMEWASTED_DATA);
             data = JsonConvert.DeserializeObject<List<TimewastedData>>(jsonString);
@@ -75,7 +75,7 @@ namespace LeaderboardBackend
 
         private string TimewastedResponse_QueryPlayer(WebHeaderCollection headers)
         {
-            Console.WriteLine("GET for QueryPlayer");
+            Console.WriteLine("GET for Timewasted QueryPlayer");
             List<TimewastedData> data = new List<TimewastedData>(); // todo sort all players n shit for rank
             string jsonString = File.ReadAllText(PATH_TIMEWASTED_DATA);
             data = JsonConvert.DeserializeObject<List<TimewastedData>>(jsonString);
@@ -109,7 +109,7 @@ namespace LeaderboardBackend
 
         private string TimewastedResponse_Leaderboard(WebHeaderCollection headers)
         {
-            Console.WriteLine("GET for Leaderboard");
+            Console.WriteLine("GET for Timewasted Leaderboard");
             List<TimewastedData> data = new List<TimewastedData>();
             string jsonString = File.ReadAllText(PATH_TIMEWASTED_DATA);
             data = JsonConvert.DeserializeObject<List<TimewastedData>>(jsonString);
@@ -131,7 +131,7 @@ namespace LeaderboardBackend
         // get info about one player
         private string RankmeResponse_QueryPlayer(WebHeaderCollection headers)
         {
-            Console.WriteLine("GET for QueryPlayer");
+            Console.WriteLine("GET for Rankme QueryPlayer");
             List<RankmeData> data = new List<RankmeData>(); // todo sort all players n shit for rank
             string jsonString = File.ReadAllText(PATH_RANKME_DATA);
             data = JsonConvert.DeserializeObject<List<RankmeData>>(jsonString);
@@ -166,7 +166,7 @@ namespace LeaderboardBackend
         // get rankme leaderboard
         private string RankmeResponse_Leaderboard(WebHeaderCollection headers) // leave in params maybe diff leaderboard sortings idk
         {
-            Console.WriteLine("GET for Leaderboard");
+            Console.WriteLine("GET for Rankme Leaderboard");
             List<RankmeData> data = new List<RankmeData>(); 
             string jsonString = File.ReadAllText(PATH_RANKME_DATA);
             data = JsonConvert.DeserializeObject<List<RankmeData>>(jsonString);
@@ -187,7 +187,7 @@ namespace LeaderboardBackend
 
         private string TopspeedResponse_QueryPlayer(WebHeaderCollection headers)
         {
-            Console.WriteLine("GET for QueryPlayer");
+            //Console.WriteLine("GET for QueryPlayer");
             List<TopspeedData> data = new List<TopspeedData>(); // todo sort all players n shit for rank
             string jsonString = File.ReadAllText(PATH_TOPSPEED_DATA);
             data = JsonConvert.DeserializeObject<List<TopspeedData>>(jsonString);
@@ -221,7 +221,7 @@ namespace LeaderboardBackend
 
         private string TopspeedResponse_Leaderboard(WebHeaderCollection headers)
         {
-            Console.WriteLine("GET for Leaderboard");
+            Console.WriteLine("GET for Topspeed Leaderboard");
             List<TopspeedData> data = new List<TopspeedData>();
             string jsonString = File.ReadAllText(PATH_TOPSPEED_DATA);
             data = JsonConvert.DeserializeObject<List<TopspeedData>>(jsonString);

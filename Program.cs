@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Threading;
 
 namespace LeaderboardBackend
 {
@@ -9,9 +10,16 @@ namespace LeaderboardBackend
     {
         static void Main(string[] args)
         {
-            PostHandler postHandler = new PostHandler();
-            GetHandler getHandler = new GetHandler();
-            HttpServer httpServer = new HttpServer(postHandler, getHandler);
+            for (int i = 0; i < 3; i++)
+            {
+                int port = 8880 + i;
+                new Thread(new ThreadStart(() =>
+                {
+                    PostHandler postHandler = new PostHandler();
+                    GetHandler getHandler = new GetHandler();
+                    HttpServer httpServer = new HttpServer(postHandler, getHandler, port.ToString());
+                })).Start();
+            }
         }
     }
 }
